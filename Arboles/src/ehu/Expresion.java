@@ -144,16 +144,16 @@ public class Expresion {
 	}
 
 	private int evaluarExpr(int indice, String[] nombres, Expresion expresion) {
-		if (this.typeOf == TypeOf.VAR) {
-			if (!isIn(nombres, this.name, indice)) { // PASAR INDICE???
-				nombres[indice] = this.name;
+		if (expresion.typeOf == TypeOf.VAR) {
+			if (!isIn(nombres, expresion.name, indice)) { // PASAR INDICE???
+				nombres[indice] = expresion.name;
 				indice++;
 			}
 		}
-		if (this.left != null) {
+		if (expresion.left != null) {
 			indice = evaluarExpr(indice, nombres, expresion.left);
 		}
-		if (this.right != null) {
+		if (expresion.right != null) {
 			indice = evaluarExpr(indice, nombres, expresion.right);
 		}
 		return indice;
@@ -161,8 +161,8 @@ public class Expresion {
 
 	private boolean isIn(String[] lista, String key, int limite) {
 		int indice = 0;
-		while (indice <= limite && indice < lista.length) {
-			if (lista[indice].equalsIgnoreCase(key)) {
+		while (indice < limite && indice < lista.length) {
+			if (lista[indice] == (key)) {
 				return true;
 			}
 			indice++;
@@ -304,13 +304,13 @@ public class Expresion {
 		  }
 		  if(this.typeOf() == TypeOf.BINARY){
 		   switch(value){
-		   case '+':return("( " + this.left.imprimir() + " )" + " + " + "( " + this.right.imprimir() + " )");
+		   case '+':return("(" + this.left.imprimir() + ")" + " + " + "(" + this.right.imprimir() + ")");
 
-		   case '-': return("( " + this.left.imprimir() + " )" + " - " + "( " + this.right.imprimir() + " )");
+		   case '-': return("(" + this.left.imprimir() + ")" + " - " + "(" + this.right.imprimir() + ")");
 
-		   case '*': return("( " + this.left.imprimir() + " )" + " * " + "( " + this.right.imprimir() + " )");
+		   case '*': return("(" + this.left.imprimir() + ")" + " * " + "(" + this.right.imprimir() + ")");
 
-		   case '/': return("( " + this.left.imprimir() + " )" + " / " + "( " + this.right.imprimir() + " )");
+		   case '/': return("(" + this.left.imprimir() + ")" + " / " + "(" + this.right.imprimir() + ")");
 
 		   default:
 		    throw new UnsupportedOperationException("Ilegal BinOp: " + (char)(value));
@@ -341,7 +341,7 @@ public class Expresion {
 		String[] var = new String[] { "x", "y", "z" };
 		int[] valor = new int[] { 1, -3, 6 };
 
-		String[] nuevo = new String[3];
+		String[] nuevo = new String[4];
 
 		Expresion exp1 = parse(texto1);
 		Expresion exp2 = parse(texto2);
@@ -360,10 +360,11 @@ public class Expresion {
 		System.out.println();
 
 		System.out.println("variables exp3;");
-		System.out.println(exp3.evaluar(nuevo));
-		System.out.println(nuevo[0]);
-		System.out.println(nuevo[1]);
-		System.out.println(nuevo[2]);
+		System.out.println("\t" +exp3.evaluar(nuevo));
+		System.out.println("\t" + nuevo[0]);
+		System.out.println("\t" +nuevo[1]);
+		System.out.println("\t" +nuevo[2]);
+		System.out.println("\t" +nuevo[3]);
 		System.out.println();
 		System.out.println();
 
@@ -373,10 +374,10 @@ public class Expresion {
 
 		System.out.println("prueba exp4--5;");
 		System.out.println("Expresion SIN sustituir: ");
+		System.out.println(exp4.imprimir());
 		System.out.println(exp4.substituirSubexpresion("2 - + 2", "z"));
 		System.out.println("Expresion CON Sustitucion: ");
-
-		exp4.imprimir();
+		System.out.println(exp4.imprimir());
 
 	}
 }
